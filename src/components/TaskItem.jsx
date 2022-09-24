@@ -3,7 +3,7 @@ function TaskItem({ taskItemData, handleDelete }) {
   return (
     <li className='task-item mb-3 d-flex justify-content-between align-items-start bg-light p-3 rounded'>
       <div className='item-content'>
-        <h4>{taskItemData.description}</h4>
+        <h5>{taskItemData.description}</h5>
         <div className='badge bg-secondary'>{taskItemData.category}</div>
       </div>
       <div className='options'>
