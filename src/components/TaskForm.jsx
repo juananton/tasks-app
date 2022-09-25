@@ -1,34 +1,52 @@
 import { useState } from 'react';
 import Button from './Button';
+import Priority from './Priority';
 
-function TaskForm() {
-  const [text, setText] = useState('');
+function TaskForm({ handleAdd }) {
+  const [description, setDescription] = useState('');
+  const [category, setCategory] = useState('Work');
+  const [priority, setPriority] = useState('High');
   const [btnDisabled, setBtnDisabled] = useState(true);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState(
+    'Description must be at least 5 characters'
+  );
+
   const handleTextChange = (e) => {
-    if (text.length >= 10) {
-      setBtnDisabled(false);
-    } else {
+    if (description.length <= 5) {
       setBtnDisabled(true);
-      setMessage('Text must be at least 10 characters');
+      setMessage('Text must be at least 5 characters');
+    } else {
+      setBtnDisabled(false);
+      setMessage('');
     }
-    setText(e.target.value);
+    setDescription(e.target.value);
   };
-  const [category, setCategory] = useState('');
+
   const handleSelectChange = (e) => {
     setCategory(e.target.value);
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newTask = {
+      description,
+      category,
+      priority,
+    };
+    handleAdd(newTask);
+    setDescription('');
+  };
+
   return (
-    <form className='mb-4'>
+    <form className='mb-4' onSubmit={handleSubmit}>
       <input
         className='form-control mb-3'
         type='text'
         placeholder='Enter task description'
         onChange={handleTextChange}
-        value={text}
+        value={description}
       />
-      <p>{message}</p>
+      <p className='text-secondary'>{message}</p>
       <select
         className='form-select mb-3'
         onChange={handleSelectChange}
@@ -38,6 +56,7 @@ function TaskForm() {
         <option value='Personal'>Personal</option>
         <option value='Family'>Family</option>
       </select>
+      <Priority selectPriority={(priority) => setPriority(priority)} />
       <Button type='submit' variant='primary' isDisabled={btnDisabled}>
         Add Task
       </Button>
