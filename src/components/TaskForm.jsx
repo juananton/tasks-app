@@ -4,14 +4,15 @@ import Priority from './Priority';
 
 function TaskForm({ handleAdd }) {
   const [description, setDescription] = useState('');
-  const [category, setCategory] = useState('Work');
-  const [priority, setPriority] = useState('High');
-  const [btnDisabled, setBtnDisabled] = useState(true);
   const [message, setMessage] = useState(
     'Description must be at least 5 characters'
   );
 
-  const handleTextChange = (e) => {
+  const [category, setCategory] = useState('Work');
+  const [priority, setPriority] = useState('High');
+  const [btnDisabled, setBtnDisabled] = useState(true);
+
+  const handleTextChange = e => {
     if (description.length <= 5) {
       setBtnDisabled(true);
       setMessage('Text must be at least 5 characters');
@@ -22,11 +23,11 @@ function TaskForm({ handleAdd }) {
     setDescription(e.target.value);
   };
 
-  const handleSelectChange = (e) => {
+  const handleSelectChange = e => {
     setCategory(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     e.preventDefault();
     const newTask = {
       description,
@@ -56,7 +57,7 @@ function TaskForm({ handleAdd }) {
         <option value='Personal'>Personal</option>
         <option value='Family'>Family</option>
       </select>
-      <Priority selectPriority={(priority) => setPriority(priority)} />
+      <Priority selectPriority={priority => setPriority(priority)} />
       <Button type='submit' variant='primary' isDisabled={btnDisabled}>
         Add Task
       </Button>
