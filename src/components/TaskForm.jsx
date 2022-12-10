@@ -4,21 +4,20 @@ import Priority from './Priority';
 
 function TaskForm({ handleAdd }) {
   const [description, setDescription] = useState('');
-  const [message, setMessage] = useState(
-    'Description must be at least 5 characters'
-  );
+  const messageText = 'Description must be at least 5 characters';
+  const [message, setMessage] = useState(messageText);
 
   const [category, setCategory] = useState('Work');
   const [priority, setPriority] = useState('High');
   const [btnDisabled, setBtnDisabled] = useState(true);
 
   const handleTextChange = e => {
-    if (description.length <= 5) {
-      setBtnDisabled(true);
-      setMessage('Text must be at least 5 characters');
-    } else {
-      setBtnDisabled(false);
+    if (description.length > 5) {
       setMessage('');
+      setBtnDisabled(false);
+    } else {
+      setMessage(messageText);
+      setBtnDisabled(true);
     }
     setDescription(e.target.value);
   };
